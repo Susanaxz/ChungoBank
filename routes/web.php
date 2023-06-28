@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CargarVistasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,33 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/alta-movimientos', function () {
+    return view('alta-movimientos');
+});
+
+Route::get('/alta-mto-puntos', function () {
+    return view('alta-mto-puntos');
+});
+
+
+Route::get('/alta-personas', function () {
+    return view('alta-personas');
+});
+
+Route::get('/consulta-movimientos', function () {
+    return view('consulta-movimientos');
+});
+
+Route::get('/detalle-movimiento', function () {
+    return view('detalle-movimiento');
+});
+
+Route::get('/gestion', function () {
+    return view('gestion');
+});
+
+Route::get('/login', function () {
+    return view('login');
 });
