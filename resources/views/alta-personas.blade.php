@@ -30,7 +30,7 @@
 				<input type="text" maxlength='4' id="pan4" disabled>
 				<br><br><br>
 				<input type="button" id="alta" value='Alta'>
-				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'gestion.html'">
+				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'gestion'">
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>

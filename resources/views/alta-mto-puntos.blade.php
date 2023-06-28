@@ -1,4 +1,5 @@
-@extends('layouts.layout') // extiende de la plantilla layout.blade.php y que contiene el código HTML común a todas las páginas de la aplicación
+@extends('layouts.layout') 
+{{--extiende de la plantilla layout.blade.php y que contiene el código HTML común a todas las páginas de la aplicación--}}
 
 @section('header', 'Alta y Mantenimiento Cta Puntos') 
 
@@ -35,8 +36,8 @@
 				<input type="button" id="altapuntos" value='Alta'>
 				<input type="button" id="modifpuntos" value='Modificar'>
 				<input type="button" id="bajapuntos" value='Baja'>
-				<input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = 'consulta-movimientos.html'">
-				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'gestion.html'">
+				<input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = 'consulta-movimientos'">
+				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'gestion'">
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>

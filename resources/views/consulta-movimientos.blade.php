@@ -49,10 +49,10 @@
 				</table>
 				<br><br><br>
 				<input type="button" id="aceptar" value='Aceptar'>
-				<input type="button" id="detalle" value='Detalle'   onclick="window.location.href = 'detalle-movimiento.html'">
+				<input type="button" id="detalle" value='Detalle'   onclick="window.location.href = 'detalle-movimiento'">
 				<input type="button" id="imprimir" value='Imprimir'>
-				<input type="button" id="salir" value='Abandonar'  onclick="window.location.href = 'alta-mto-puntos.html'">
-				<input type="button" id="altamov" value='Alta movimiento' onclick="window.location.href = 'alta-movimientos.html'">
+				<input type="button" id="salir" value='Abandonar'  onclick="window.location.href = 'alta-mto-puntos'">
+				<input type="button" id="altamov" value='Alta movimiento' onclick="window.location.href = 'alta-movimientos'">
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>

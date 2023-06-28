@@ -43,7 +43,7 @@
 				<label>COMENTARIOS</label>
 				<textarea id="comentarios" disabled></textarea>
 				<br><br><br>
-				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'consulta-movimientos.html'">
+				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'consulta-movimientos'">
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>

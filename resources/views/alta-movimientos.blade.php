@@ -30,7 +30,7 @@
 				<input type="number" id="puntos">
 				<br><br><br>
 				<input type="button" id="alta" value='Alta'>
-				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'consulta-movimientos.html'">
+				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'consulta-movimientos'">
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>

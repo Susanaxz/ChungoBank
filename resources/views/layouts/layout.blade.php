@@ -15,9 +15,9 @@
             <h4>Chungobank Investments & Trusts</h4>
         </header>
         <nav>
-            <div><a href="gestion.html">Gestión comercial</a></div>
-            <div><a href="alta-mto-puntos.html">Cuenta Puntos</a> |
-                <a href="alta-personas.html">Alta personas</a>
+            <div><a href="gestion">Gestión comercial</a></div>
+            <div><a href="alta-mto-puntos">Cuenta Puntos</a> |
+                <a href="alta-personas">Alta personas</a>
             </div>
         </nav>
         <h4 class='center'>@yield('header')</h4>
