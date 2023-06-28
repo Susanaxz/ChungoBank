@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Chungo Bank</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="assets/css/cb.css">
-</head>
-<body>
-	<div class='contenedor'>
-		<header>
-			<img src="assets/img/chungobank.png">
-			<h4>Chungobank Investments & Trusts</h4>
-		</header>
-		<nav>
-			<div><a href="gestion.html">Gestión comercial</a></div>
-			<div><a href="alta-mto-puntos.html">Cuenta Puntos</a> | 
-			<a href="alta-personas.html">Alta personas</a></div>
-		</nav>
-		<h4 class='center'>Alta movimientos Cta Puntos</h4>
+@extends('layouts.layout') // extiende de la plantilla layout.blade.php y que contiene el código HTML común a todas las páginas de la aplicación
+
+@section('header', 'Alta movimiento Cta Puntos') // define el contenido de la sección header de la plantilla layout.blade.php
+	
+@section('content') // define el contenido de la sección content de la plantilla layout.blade.php
 		<section>
 			<form id='formulario_mov'>
 				<label>CONTRATO PUNTOS:</label>
@@ -48,6 +34,4 @@
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 		</section>
-	</div>
-</body>
-</html>
+@endsection
