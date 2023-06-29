@@ -14,9 +14,9 @@ use App\Http\Controllers\CargarVistasController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/alta-movimientos', function () {
     return view('alta-movimientos');
@@ -39,10 +39,15 @@ Route::get('/detalle-movimiento', function () {
     return view('detalle-movimiento');
 });
 
+Route::get('/', function () {
+    return view('gestion');
+});
+
+
 Route::get('/gestion', function () {
     return view('gestion');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
