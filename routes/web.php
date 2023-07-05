@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CargarVistasController;
+use App\Http\Controllers\PersonasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,13 @@ Route::get('/gestion', function () {
     return view('gestion');
 });
 
+// Route::get('/gestion', [PersonasController::class, 'gestion'])->name('gestion');
+
+
+Route::get('/personas/{nif}', [App\Http\Controllers\PersonasController::class, 'consulta']);
+
 // Route::get('/login', function () {
 //     return view('login');
 // });
+
+Route::post('/personas', [App\Http\Controllers\PersonasController::class, 'alta'])->name('personas.alta');
