@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Personas;
 
 class CargarVistasController extends Controller
 {
@@ -30,8 +31,17 @@ class CargarVistasController extends Controller
 
     public function gestion()
     {
-        return view('gestion');
+        if (session()->has('idPersona')) {
+            $id = session('idPersona');
+            $persona = Personas::find($id);
+            $datos['persona'] = $persona;
+        }
+
+        $datos['titulo'] = 'Gestión comercial';
+
+        return view('gestion')->with($datos);
     }
+
 
     public function login(){
         return view('login');

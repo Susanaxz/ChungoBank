@@ -4,14 +4,18 @@
 <head>
     <title>Chungo Bank</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="assets/css/cb.css">
+    {{-- <link rel="stylesheet" type="text/css" href="assets/css/cb.css"> --}}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/cb.css') }}">
+
     @yield('styles')
 </head>
 
 <body>
     <div class='contenedor'>
         <header>
-            <img src="assets/img/chungobank.png">
+            <img src="{{ asset('assets/img/chungobank.png') }}">
+
             <h4>Chungobank Investments & Trusts</h4>
         </header>
         <nav>

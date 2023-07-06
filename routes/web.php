@@ -58,4 +58,9 @@ Route::get('/personas/{nif}', [App\Http\Controllers\PersonasController::class, '
 //     return view('login');
 // });
 
+Route::get('/alta-personas', function () {
+    return view('alta-personas');
+})->name('personas.showForm');
+
 Route::post('/personas', [App\Http\Controllers\PersonasController::class, 'alta'])->name('personas.alta');
+Route::get('/personas', [App\Http\Controllers\PersonasController::class, 'showForm'])->name('personas.showForm');
