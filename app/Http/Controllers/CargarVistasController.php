@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Personas;
 use App\Models\Programas;
-use Exception;
+use Exception; // clase para lanzar excepciones y manejar errores
+use Illuminate\Support\Facades\DB;
 
 class CargarVistasController extends Controller
 {
@@ -15,22 +16,40 @@ class CargarVistasController extends Controller
         return view('alta-movimientos');
     }
 
-    public function altaMtoPuntos()
+    public function altaMtoPuntos(Request $request)
     {
-        // Comprobamos si existe la variable de sesión 'idPersona'
-        if (!session()->has('idPersona')) {
-            throw new Exception("Error Processing Request", 1);
+        try {
+            if (!$request->session()->has('idPersona')) {
+                throw new Exception("Error Processing Request", 1);
+            }
+
+            $id = $request->session()->get('idPersona');
+            $persona = Personas::find($id);
+
+            if (!$persona) {
+                throw new Exception("Error Processing Request", 1);
+            }
+
+            $programas = [
+                ['codigo' => 'PBS', 'descripcion' => 'Programa Puntos Básico'],
+                ['codigo' => 'PAV', 'descripcion' => 'Programa Puntos Avanzado'],
+                ['codigo' => 'PPR', 'descripcion' => 'Programa Puntos Premium'],
+                ['codigo' => 'PPP', 'descripcion' => 'Programa Puntos Prueba'],
+
+            ];
+
+            // dd($programas);
+
+            // var_dump($programas);
+
+
+            return view('alta-mto-puntos')->with([
+                'persona' => $persona,
+                'programas' => $programas,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->route('gestion');
         }
-
-        // Recuperamos el ID de la variable de sesión
-        $id = session('idPersona');
-        if (!$datos['persona'] = Personas::find($id)) {
-            throw new Exception("Error Processing Request", 1);
-        }
-
-        $datos['programas'] = Programas::all(['codigo', 'descripcion']);
-
-        return view('alta-mto-puntos')->with($datos);
     }
 
     public function alta_personas(){

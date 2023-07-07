@@ -23,9 +23,12 @@ Route::get('/alta-movimientos', function () {
     return view('alta-movimientos');
 });
 
-Route::get('/alta-mto-puntos', function () {
-    return view('alta-mto-puntos');
-});
+// Route::get('/alta-mto-puntos', function () {
+//     return view('alta-mto-puntos');
+// });
+
+Route::get('/alta-mto-puntos', [CargarVistasController::class, 'altaMtoPuntos'])->name('alta-mto-puntos');
+
 
 
 Route::get('/alta-personas', function () {

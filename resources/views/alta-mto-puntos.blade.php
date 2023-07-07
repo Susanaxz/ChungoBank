@@ -6,6 +6,7 @@
 @section('content')
 		<section>
 			<form id='formulario'>
+				@csrf {{-- se añade para evitar el error de TokenMismatchException --}}
 				<label>CONTRATO PUNTOS:</label>
 				<input type="text" id="entidad" disabled>
 				<input type="text" id="oficina" disabled>
@@ -17,13 +18,16 @@
 				<input type="text" id="titular" value='{{ $persona->nombre ?? null }} {{ $persona->apellidos ?? null }}' disabled>
 
 				<br><br><hr><br><br>
-				<label>CÓDIGO PROGRAMA:</label>
-				<option disabled selected value=''>Seleccione código</option>
-				@foreach ($programas as $programa)
-				<option value="{{ $programa->codigo }}">{{ $programa->codigo }}</option>
-				@endforeach
 
+				<label>CÓDIGO PROGRAMA:</label>
+
+				<select id="codigo">
+				    <option disabled selected value="">Seleccione código</option>
+				    @foreach ($programas as $programa)
+				    <option value="{{ $programa['codigo'] }}">{{ $programa['codigo'] }}</option>
+				    @endforeach
 				</select>
+
 				<br><br>
 				<label>DESCRIPCIÓN PROGRAMA:</label>
 				<input type="text" id='descripcion' disabled>
@@ -43,21 +47,19 @@
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
 
-			/*Añadimos el script para que se cargue la descripción del programa en función del código seleccionado*/
+			{{-- /*Añadimos el script para que se cargue la descripción del programa en función del código seleccionado*/ --}}
 			<script type="text/javascript">
 			    var programas = {
 			        @foreach($programas as $programa)
-			        "{{ $programa->codigo }}": "{{ $programa->descripcion }}"
+			        "{{ $programa['codigo'] }}": "{{ $programa['descripcion'] }}"
 			        , @endforeach
 			    }
 
-				document.getElementById('codigo').addEventListener('change', function() {
-				var codigo = this.value;
-				var descripcion = programas[codigo] || '';
-				document.getElementById('descripcion').value = descripcion;
-				});
-
-
+			    document.getElementById('codigo').addEventListener('change', function() {
+			        var codigo = this.value;
+			        var descripcion = programas[codigo] || '';
+			        document.getElementById('descripcion').value = descripcion;
+			    });
 			</script>
 
 		</section>
