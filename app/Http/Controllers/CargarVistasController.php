@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Personas;
+use App\Models\Programas;
+use Exception;
 
 class CargarVistasController extends Controller
 {
@@ -13,8 +15,22 @@ class CargarVistasController extends Controller
         return view('alta-movimientos');
     }
 
-    public function alta_mto_puntos(){
-        return view('alta-mto-puntos');
+    public function altaMtoPuntos()
+    {
+        // Comprobamos si existe la variable de sesión 'idPersona'
+        if (!session()->has('idPersona')) {
+            throw new Exception("Error Processing Request", 1);
+        }
+
+        // Recuperamos el ID de la variable de sesión
+        $id = session('idPersona');
+        if (!$datos['persona'] = Personas::find($id)) {
+            throw new Exception("Error Processing Request", 1);
+        }
+
+        $datos['programas'] = Programas::all(['codigo', 'descripcion']);
+
+        return view('alta-mto-puntos')->with($datos);
     }
 
     public function alta_personas(){
