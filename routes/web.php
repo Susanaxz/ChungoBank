@@ -49,8 +49,6 @@ Route::get('/gestion', function () {
     return view('gestion');
 });
 
-// Route::get('/gestion', [PersonasController::class, 'gestion'])->name('gestion');
-
 
 Route::get('/personas/{nif}', [App\Http\Controllers\PersonasController::class, 'consulta']);
 
@@ -58,9 +56,10 @@ Route::get('/personas/{nif}', [App\Http\Controllers\PersonasController::class, '
 //     return view('login');
 // });
 
-Route::get('/alta-personas', function () {
-    return view('alta-personas');
-})->name('personas.showForm');
+
 
 Route::post('/personas', [App\Http\Controllers\PersonasController::class, 'alta'])->name('personas.alta');
 Route::get('/personas', [App\Http\Controllers\PersonasController::class, 'showForm'])->name('personas.showForm');
+Route::get('/alta-personas', [PersonasController::class, 'showForm'])->name('personas.showForm'); // Ruta para mostrar el formulario de alta de personas (GET)
+
+

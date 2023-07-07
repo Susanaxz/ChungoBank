@@ -19,9 +19,12 @@
             <h4>Chungobank Investments & Trusts</h4>
         </header>
         <nav>
-            <div><a href="gestion">Gestión comercial</a></div>
-            <div><a href="alta-mto-puntos">Cuenta Puntos</a> |
-                <a href="alta-personas">Alta personas</a>
+            <div><a href="{{ url('gestion') }}">Gestión comercial</a></div>
+
+            <div><a href="{{ url('alta-mto-puntos') }}">Cuenta Puntos</a> |
+
+            <a href="{{ url('alta-personas') }}">Alta personas</a>
+
             </div>
         </nav>
         <h4 class='center'>@yield('header')</h4>
@@ -32,3 +35,4 @@
 </body>
 
 </html>
+

@@ -13,15 +13,16 @@
 				<input type="text" id="cuenta" disabled>
 				<br><br>
 				<label>TITULAR:</label>
-				<input type="text" id="nif" value='' disabled>
-				<input type="text" id="titular" value='' disabled>
+				<input type="text" id="nif" value='{{ $persona -> nif ?? null}}' disabled>
+				<input type="text" id="titular" value='{{ $persona->nombre ?? null }} {{ $persona->apellidos ?? null }}' disabled>
+
 				<br><br><hr><br><br>
 				<label>CÓDIGO PROGRAMA:</label>
-				<select id='codigo'>
-					<option disabled selected value=''>Seleccione código</option>
-					<option>PBS</option>
-					<option>PAV</option>
-					<option>PPR</option>
+				<option disabled selected value=''>Seleccione código</option>
+				@foreach ($programas as $programa)
+				<option value="{{ $programa->codigo }}">{{ $programa->codigo }}</option>
+				@endforeach
+
 				</select>
 				<br><br>
 				<label>DESCRIPCIÓN PROGRAMA:</label>
@@ -37,8 +38,27 @@
 				<input type="button" id="modifpuntos" value='Modificar'>
 				<input type="button" id="bajapuntos" value='Baja'>
 				<input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = 'consulta-movimientos'">
-				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = 'gestion'">
+				<input type="button" id="salir" value='Abandonar' onclick="window.location.href = {{ url('gestion') }}">
+
 				<span id='mensajes'>Zona de mensajes</span>
 			</form>
+
+			/*Añadimos el script para que se cargue la descripción del programa en función del código seleccionado*/
+			<script type="text/javascript">
+			    var programas = {
+			        @foreach($programas as $programa)
+			        "{{ $programa->codigo }}": "{{ $programa->descripcion }}"
+			        , @endforeach
+			    }
+
+				document.getElementById('codigo').addEventListener('change', function() {
+				var codigo = this.value;
+				var descripcion = programas[codigo] || '';
+				document.getElementById('descripcion').value = descripcion;
+				});
+
+
+			</script>
+
 		</section>
 @endsection
