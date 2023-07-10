@@ -21,6 +21,9 @@ class PersonasController extends Controller
     {
         $data['nif'] = $nif;
 
+        // $persona = Personas::where('nif', $data['nif'])->first();
+        // dd($persona);
+
         $rules = array(
             'nif' => ["required", new nifExists]
         );
@@ -49,6 +52,10 @@ class PersonasController extends Controller
     public function alta(Request $request)
     {
         $datos = $request->all();
+        
+        if (isset($datos['tarjeta1']) && isset($datos['tarjeta2']) && isset($datos['tarjeta3']) && isset($datos['tarjeta4'])) {
+            $datos['tarjeta'] = $datos['tarjeta1'] . $datos['tarjeta2'] . $datos['tarjeta3'] . $datos['tarjeta4'];
+        }
         $datos['tarjeta'] = $datos['tarjeta1'] . $datos['tarjeta2'] . $datos['tarjeta3'] . $datos['tarjeta4'];
 
         $validator = Validator::make($datos, [
@@ -80,8 +87,7 @@ class PersonasController extends Controller
         } else {
             try {
                 $persona = Personas::create($datos);
-                Log::info(json_encode(DB::getQueryLog()));
-
+                session()->flash('success', 'Persona creada exitosamente!');
                 $datos['persona'] = $persona;
                 $datos['titulo'] = 'Alta Personas';
                 
