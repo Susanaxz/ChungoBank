@@ -25,7 +25,7 @@ class PersonasFactory extends Factory
             'nif' => $this->faker->unique()->regexify('[0-9]{8}[A-Z]{1}'), 
             'nombre' => $this->faker->firstName(),
             'apellidos' => $this->faker->lastName(),
-            'direccion' => substr($this->faker->address, 0, 80),
+            'direccion' => substr($this->faker->address, 0, 50),
             'email' => $this->faker->unique()->safeEmail(),
             'tarjeta' => $this->faker->unique()->regexify('[0-9]{16}'),
         ];
