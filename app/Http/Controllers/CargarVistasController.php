@@ -33,14 +33,9 @@ class CargarVistasController extends Controller
             $programas = [
                 ['codigo' => 'PBS', 'descripcion' => 'Programa Puntos Básico'],
                 ['codigo' => 'PAV', 'descripcion' => 'Programa Puntos Avanzado'],
-                ['codigo' => 'PPR', 'descripcion' => 'Programa Puntos Premium'],
-                ['codigo' => 'PPP', 'descripcion' => 'Programa Puntos Prueba'],
+                ['codigo' => 'PPR', 'descripcion' => 'Programa Puntos Premium']
 
             ];
-
-            // dd($programas);
-
-            // var_dump($programas);
 
 
             return view('alta-mto-puntos')->with([
@@ -48,19 +43,22 @@ class CargarVistasController extends Controller
                 'programas' => $programas,
             ]);
         } catch (Exception $e) {
-            return redirect()->route('gestion');
+            return redirect('gestion');
         }
     }
 
-    public function alta_personas(){
+    public function alta_personas()
+    {
         return view('alta-personas');
     }
 
-    public function consulta_movimientos(){
+    public function consulta_movimientos()
+    {
         return view('consulta-movimientos');
     }
 
-    public function detalle_movimiento(){
+    public function detalle_movimiento()
+    {
         return view('detalle-movimiento');
     }
 
@@ -70,17 +68,13 @@ class CargarVistasController extends Controller
             $id = session('idPersona');
             $persona = Personas::find($id);
             $datos['persona'] = $persona;
+            $datos['titulo'] = 'Gestión comercial';
+
+            // si la sesion existe carga la vista gestion
+            return view('gestion')->with($datos);
+        } else {
+            // si la sesion no existe carga la vista login
+            return redirect('gestion');
         }
-
-        $datos['titulo'] = 'Gestión comercial';
-
-        return view('gestion')->with($datos);
     }
-
-
-    public function login(){
-        return view('login');
-    }
-
-
 }
