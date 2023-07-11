@@ -37,9 +37,9 @@ class Movimientos extends Model
         'comentarios',
         'cuenta_id'
     ];
-// Relación de uno a muchos inversa (muchos a uno) de movimientos a cuentas
-//     public function cuenta()
-//     {
-//         return $this->belongsTo(Cuentas::class);
-//     }
+//  Relación de uno a muchos inversa (muchos a uno) de movimientos a cuentas
+    public function cuenta()
+   {
+        return $this->hasOne(Cuentas::class);
+  }
 }

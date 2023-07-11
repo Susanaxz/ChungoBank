@@ -21,6 +21,10 @@ class Personas extends Model
         ]);
     }
 
+    public function cuenta()
+    {
+        return $this->hasOne(Cuentas::class); // la relación es uno a uno
+    }
 
     protected $fillable = [
         'nif',
