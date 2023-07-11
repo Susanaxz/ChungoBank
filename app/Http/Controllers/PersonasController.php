@@ -21,9 +21,6 @@ class PersonasController extends Controller
     {
         $data['nif'] = $nif;
 
-        // $persona = Personas::where('nif', $data['nif'])->first();
-        // dd($persona);
-
         $rules = array(
             'nif' => ["required", new nifExists]
         );
@@ -39,6 +36,12 @@ class PersonasController extends Controller
             session()->forget('idPersona');
         } else {
             $persona = Personas::where('nif', $data['nif'])->first();
+
+                // comprobamos si existe la persona en la base de datos
+            if ($persona === null) {
+                return redirect()->back()->withErrors(['nif' => 'No se encontró ninguna persona con ese NIF']);
+            }
+
             session(['idPersona' => $persona->id]);
             $datos['persona'] = $persona;
         }
