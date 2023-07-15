@@ -29,9 +29,12 @@
         <label>CÓDIGO PROGRAMA:</label>
         <select name="programa_id">
             @foreach($programas as $programa)
-            <option value="{{ $programa->codigo }}">{{ $programa->codigo }}</option>
+            <option value="{{ $programa->codigo }}" {{ $programa->codigo == $programaActual ? 'selected' : '' }}>
+                {{ $programa->codigo }}
+            </option>
             @endforeach
         </select>
+
 
 
 
@@ -65,13 +68,20 @@
         , @endforeach
     };
 
-    document.querySelector('select[name="programa_id"]').addEventListener('change', function() {
+    var selectPrograma = document.querySelector('select[name="programa_id"]');
+
+    selectPrograma.addEventListener('change', function() {
         var codigo = this.value;
         var descripcion = programas[codigo] || '';
         document.getElementById('descripcion').value = descripcion;
     });
 
+    // Simulate a "change" event
+    var event = new Event('change');
+    selectPrograma.dispatchEvent(event);
+
 </script>
+
 
 
 

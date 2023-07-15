@@ -20,18 +20,19 @@ class CargarVistasController extends Controller
     {
         $id = $request->session()->get('idPersona', null);
         if ($id == null) {
-
             return redirect('gestion');
         }
 
         $persona = Personas::with('cuenta.programa')->find($id);
         $programas = Programas::all();
         $cuenta = $persona ? $persona->cuenta : null;
+        $programaActual = $cuenta ? $cuenta->programa : null;
 
         return view('alta-mto-puntos')->with([
             'persona' => $persona,
             'programas' => $programas,
-            'cuenta' => $cuenta
+            'cuenta' => $cuenta,
+            'programaActual' => $programaActual
         ]);
     }
 

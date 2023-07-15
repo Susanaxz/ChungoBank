@@ -22,22 +22,6 @@ class Cuenta extends Model
         'persona_id' // Para relacionar la cuenta con la persona
     ];
 
-    // public static function alta($datos)
-    // {
-    //     return Cuentas::create([
-    //         'entidad' => $datos['entidad'],
-    //         'oficina' => $datos['oficina'],
-    //         'dc' => $datos['dc'],
-    //         'cuenta' => $datos['cuenta'],
-    //         'programa' => $datos['programa'],
-    //         'extracto' => $datos['extracto'],
-    //         'renuncia' => $datos['renuncia'],
-    //         'saldo' => $datos['saldo'],
-    //         'fechaextracto' => $datos['fechaextracto'],
-    //         'persona_id' => $datos['persona_id'] // Para relacionar la cuenta con la persona
-    //     ]);
-    // }
-
     public function persona()
     {
         return $this->belongsTo(Personas::class, 'persona_id'); // la relación es uno a uno
