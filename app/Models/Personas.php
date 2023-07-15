@@ -23,7 +23,7 @@ class Personas extends Model
 
     public function cuenta()
     {
-        return $this->hasOne(Cuentas::class); // la relación es uno a uno
+        return $this->hasOne(Cuenta::class, 'persona_id');
     }
 
     protected $fillable = [
@@ -34,4 +34,11 @@ class Personas extends Model
         'email',
         'tarjeta'
     ];
+
+    public function getCuenta()
+    {
+        return $this->hasOne(Cuenta::class, 'persona_id')->first();
+    }
 }
+
+

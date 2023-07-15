@@ -3,55 +3,80 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Cuentas;
+use App\Models\Cuenta;
+
 use App\Models\Personas;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Programas;
 
 class CuentasController extends Controller
 {
     public function show(Request $request)
     {
-        $persona = Personas::find($request->input('persona_id'));
-
-        if (!$persona) {
-            // Si no se seleccionó una persona, redirigir o mostrar un mensaje
-            // Aquí estoy redirigiendo, pero puedes cambiar esto para que se ajuste a tus necesidades
-            return Redirect::route('gestion');
+        $programas = $this->getProgramas();
+        foreach ($programas as $programa) {
+            var_dump($programa);
         }
-
-        $cuenta = $persona->cuentaPuntos;
-
-        if (!$cuenta) {
-            // Si la persona no tiene una cuenta, muestra un mensaje
-            // De nuevo, ajusta esto a tus necesidades
-            return view('gestion', ['mensaje' => 'Esta persona no tiene una cuenta']);
-        }
-
-        // Si la persona tiene una cuenta, muestra los datos de la cuenta
-        return view('alta-mto-puntos', ['cuenta' => $cuenta]);
+        $programas = Programas::all();
+        return view('alta-mto-puntos', compact('programas'));
     }
+    
 
     public function store(Request $request)
     {
-        $persona = Personas::find($request->input('persona_id'));
+        $persona = Personas::find($request->session()->get('idPersona'));
 
-        if (!$persona) {
-            // Si no se seleccionó una persona, redirige o muestra un mensaje
-            return Redirect::route('gestion');
+        $cuenta = $persona ? $persona->cuenta : null;
+
+        if (!$cuenta) {
+            $datos = $request->all();
+            $datos['persona_id'] = $persona ? $persona->id : null;
+            Cuenta::create($datos);
         }
 
-        $cuenta = $persona->cuentaPuntos;
+        $request->session()->put('idPersona', $persona ? $persona->id : null);
+        return $this->show($request);
+    }
 
-        if ($cuenta) {    
-            return response()->json(['mensaje' => 'Esta persona ya tiene una cuenta'], 403);
+    public function getProgramas()
+    {
+        return collect([
+            (object)['codigo' => 'PBS', 'descripcion' => 'Programa Puntos Básico'],
+            (object)['codigo' => 'PAV', 'descripcion' => 'Programa Puntos Avanzado'],
+            (object)['codigo' => 'PPR', 'descripcion' => 'Programa Puntos Premium']
+        ]);
+    }
+
+    public function index()
+    {
+        $programas = $this->getProgramas();
+        if (is_array($programas)) {
+            echo "Es un array";
+        } else {
+            echo "No es un array";
         }
+        dd($programas);
+        return view('alta-mto-puntos', ['programas' => $programas]);
+    }
 
-        // Crea una nueva cuenta
-        $datos = $request->all();
-        $datos['persona_id'] = $persona->id;
-        Cuentas::alta($datos);
 
-        // Redirige a la vista de la cuenta o devuelve una respuesta adecuada
-        return Redirect::route('alta-mto-puntos', ['cuenta_id' => $persona->cuentaPuntos->id]);
+    public function consulta(Personas $persona)
+    {
+        $cuenta = $persona->getCuenta();
+
+        // Debug
+        var_dump($cuenta);
+
+        // busca el programa que corresponde al código del programa en la cuenta
+        $programa = $cuenta ? $cuenta->getPrograma() : null;
+
+        // Debug
+        var_dump($programa);
+
+        $cuenta = $cuenta ? $cuenta : new Cuenta;
+        $cuenta->descripcion = $programa ? $programa->descripcion : '';
+
+        $respuesta = array('codigo' => '00', 'respuesta' => $cuenta);
+
+        return response()->json($respuesta);
     }
 }

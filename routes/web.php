@@ -15,21 +15,33 @@ use App\Http\Controllers\PersonasController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('/gestion');
+});
+
+Route::get('/gestion', function () {
+    return view('/gestion');
+});
 
 Route::get('/alta-movimientos', function () {
     return view('alta-movimientos');
 });
+Route::get('/programa-descripcion/{codigo}', 'CargarVistasController@getDescripcionPrograma');
 
-// Route::get('/alta-mto-puntos', function () {
-//     return view('alta-mto-puntos');
+
+// Route::get('/alta-mto-puntos/{persona_id}', function ($persona_id) {
+//     if (session()->get('idPersona') == $persona_id) {
+//         return redirect('alta-mto-puntos');
+//     } else {
+//         return redirect('gestion');
+//     }
 // });
 
-Route::get('/alta-mto-puntos', [CargarVistasController::class, 'altaMtoPuntos'])->name('alta-mto-puntos');
 
 
+Route::get('/alta-mto-puntos', [CargarVistasController::class, 'altaMtoPuntos']);
+
+Route::get('/cuentas/{persona}', [CuentasController::class, 'consulta'])->name('cuentas.consulta');
 
 Route::get('/alta-personas', function () {
     return view('alta-personas');
@@ -43,26 +55,12 @@ Route::get('/detalle-movimiento', function () {
     return view('detalle-movimiento');
 });
 
-Route::get('/', function () {
-    return view('gestion');
-});
+Route::get('/personas/{nif}', [PersonasController::class, 'consulta']);
 
+Route::get('/personas/{id}', [PersonasController::class, 'show'])->name('personas.show');
 
-Route::get('/gestion', function () {
-    return view('gestion');
-});
+Route::post('/personas', [PersonasController::class, 'alta'])->name('personas.alta');
 
+Route::get('/personas', [PersonasController::class, 'showForm'])->name('personas.showForm');
 
-Route::get('/personas/{nif}', [App\Http\Controllers\PersonasController::class, 'consulta']);
-
-// Route::get('/login', function () {
-//     return view('login');
-// });
-
-
-
-Route::post('/personas', [App\Http\Controllers\PersonasController::class, 'alta'])->name('personas.alta');
-Route::get('/personas', [App\Http\Controllers\PersonasController::class, 'showForm'])->name('personas.showForm');
 Route::get('/alta-personas', [PersonasController::class, 'showForm'])->name('personas.showForm'); // Ruta para mostrar el formulario de alta de personas (GET)
-
-

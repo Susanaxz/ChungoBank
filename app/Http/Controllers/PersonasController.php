@@ -118,4 +118,17 @@ class PersonasController extends Controller
 
         return view('alta-personas', $datos);
     }
+
+    public function show($nif)
+    {
+        $persona = Personas::where('nif', $nif)->with('cuentas')->first();
+
+        if (!$persona) {
+            return back()->withErrors(['nif' => 'Persona no encontrada']);
+        }
+
+        return view('alta-mto-puntos', compact('persona'));
+    }
+    
 }
+
