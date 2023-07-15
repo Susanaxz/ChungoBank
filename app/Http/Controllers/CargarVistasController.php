@@ -7,6 +7,8 @@ use App\Models\Personas;
 use App\Models\Programas;
 use Exception; // clase para lanzar excepciones y manejar errores
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class CargarVistasController extends Controller
 {
@@ -59,6 +61,25 @@ class CargarVistasController extends Controller
         $datos['titulo'] = 'Gestión comercial';
 
         return view('gestion')->with($datos);
+    }
+
+    public function modificarCuenta(Request $request)
+    {
+        $id = $request->session()->get('idPersona', null);
+        if ($id == null) {
+            return redirect('gestion');
+        }
+
+        $persona = Personas::with('cuenta')->find($id);
+        if ($persona && $persona->cuenta) {
+            $persona->cuenta->programa = $request->programa_id;
+            $persona->cuenta->extracto = $request->has('extracto') ? 1 : 0;
+            $persona->cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
+            $persona->cuenta->save();
+        }
+
+        Session::flash('message', 'Cuenta modificada correctamente.');
+        return Redirect::back();
     }
 
     

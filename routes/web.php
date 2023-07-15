@@ -26,16 +26,9 @@ Route::get('/gestion', function () {
 Route::get('/alta-movimientos', function () {
     return view('alta-movimientos');
 });
-Route::get('/programa-descripcion/{codigo}', 'CargarVistasController@getDescripcionPrograma');
+// Route::get('/programa-descripcion/{codigo}', 'CargarVistasController@getDescripcionPrograma');
 
-
-// Route::get('/alta-mto-puntos/{persona_id}', function ($persona_id) {
-//     if (session()->get('idPersona') == $persona_id) {
-//         return redirect('alta-mto-puntos');
-//     } else {
-//         return redirect('gestion');
-//     }
-// });
+Route::match(['get', 'head', 'put', 'post'], '/alta-mto-puntos', 'App\Http\Controllers\CargarVistasController@modificarCuenta')->name('modificar.cuenta');
 
 
 

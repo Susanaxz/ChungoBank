@@ -4,7 +4,13 @@
 
 @section('content')
 <section>
-<form id='formulario'>
+<form id="formulario" method="post" action="{{ route('modificar.cuenta') }}">
+
+    @csrf
+   
+
+
+
         @csrf
         <label>CONTRATO PUNTOS:</label>
         @if ($persona->cuenta)
@@ -46,18 +52,27 @@
 
         <br><br>
         <label>RENUNCIA EXTRACTO:</label>
-        <input type="checkbox" name="extracto" value='si'>
+        <input type="checkbox" name="extracto" value="si" {{ $cuenta && $cuenta->extracto ? 'checked' : '' }}>
         <br><br>
         <label>RENUNCIA OBTENCIÓN PUNTOS:</label>
-        <input type="checkbox" name="renuncia" value='si'>
+        <input type="checkbox" name="renuncia" value="si" {{ $cuenta && $cuenta->renuncia ? 'checked' : '' }}>
+
+
         <br><br><br>
         <input type="button" id="altapuntos" value='Alta'>
-        <input type="button" id="modifpuntos" value='Modificar'>
+        <input type="submit" id="modifpuntos" value='Modificar'>
+
         <input type="button" id="bajapuntos" value='Baja'>
         <input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = 'consulta-movimientos'">
         <input type="button" id="salir" value='Abandonar' onclick="window.location.href = '{{ url('gestion') }}'">
+        <br><br><br>
 
-        <span id='mensajes'>Zona de mensajes</span>
+
+        <span id='mensajes'></span>
+        @if(session('message'))
+        <span id="mensajes">{{ session('message') }}</span>
+        @endif
+
     </form>
 
 
