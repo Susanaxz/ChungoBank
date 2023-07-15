@@ -48,14 +48,8 @@ class CuentasController extends Controller
 
     public function index()
     {
-        $programas = $this->getProgramas();
-        if (is_array($programas)) {
-            echo "Es un array";
-        } else {
-            echo "No es un array";
-        }
-        dd($programas);
-        return view('alta-mto-puntos', ['programas' => $programas]);
+        $programas = Programas::pluck('descripcion', 'codigo');
+        return view('alta-mto-puntos', compact('programas'));
     }
 
 
@@ -63,14 +57,9 @@ class CuentasController extends Controller
     {
         $cuenta = $persona->getCuenta();
 
-        // Debug
-        var_dump($cuenta);
-
+        
         // busca el programa que corresponde al código del programa en la cuenta
         $programa = $cuenta ? $cuenta->getPrograma() : null;
-
-        // Debug
-        var_dump($programa);
 
         $cuenta = $cuenta ? $cuenta : new Cuenta;
         $cuenta->descripcion = $programa ? $programa->descripcion : '';

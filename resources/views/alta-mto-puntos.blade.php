@@ -38,6 +38,7 @@
         <br><br>
         <label>DESCRIPCIÓN PROGRAMA:</label>
         <input type="text" id='descripcion' disabled value="">
+        
 
 
         <br><br>
@@ -57,11 +58,11 @@
     </form>
 
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     var programas = {
         @foreach($programas as $programa)
         "{{ $programa->codigo }}": "{{ $programa->descripcion }}"
-        @endforeach
+        , @endforeach
     };
 
     document.querySelector('select[name="programa_id"]').addEventListener('change', function() {
@@ -70,9 +71,7 @@
         document.getElementById('descripcion').value = descripcion;
     });
 
-</script> --}}
-
-
+</script>
 
 
 

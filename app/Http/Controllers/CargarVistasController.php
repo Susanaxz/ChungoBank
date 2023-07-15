@@ -23,7 +23,6 @@ class CargarVistasController extends Controller
 
             return redirect('gestion');
         }
-        $persona = Personas::with('cuenta.programa')->find($id);
 
         $persona = Personas::with('cuenta.programa')->find($id);
         $programas = Programas::all();
