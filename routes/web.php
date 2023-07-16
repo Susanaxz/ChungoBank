@@ -28,7 +28,8 @@ Route::get('/alta-movimientos', function () {
 });
 // Route::get('/programa-descripcion/{codigo}', 'CargarVistasController@getDescripcionPrograma');
 
-Route::match(['get', 'head', 'put', 'post'], '/alta-mto-puntos', 'App\Http\Controllers\CargarVistasController@modificarCuenta')->name('modificar.cuenta');
+// Route::match(['get', 'head', 'put', 'post'], '/alta-mto-puntos', 'App\Http\Controllers\CargarVistasController@modificarCuenta')->name('modificar.cuenta');
+Route::put('/modificar/{persona}', 'App\Http\Controllers\CuentasController@modificarCuenta')->name('modificar.cuenta');
 
 
 

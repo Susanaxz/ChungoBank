@@ -7,6 +7,11 @@
     {{-- <link rel="stylesheet" type="text/css" href="assets/css/cb.css"> --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/cb.css') }}">
+    <script type="text/javascript" src="{{ asset('assets/js/iniciopuntos.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/altapuntos.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('assets/js/modificacionpuntos.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('assets/js/consultapuntos.js') }}"></script>
+
 
     @yield('styles')
 </head>

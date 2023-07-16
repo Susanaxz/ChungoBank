@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Personas;
 use App\Models\Programas;
+use App\Models\Cuenta;
 use Exception; // clase para lanzar excepciones y manejar errores
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -63,24 +64,24 @@ class CargarVistasController extends Controller
         return view('gestion')->with($datos);
     }
 
-    public function modificarCuenta(Request $request)
+    
+    public function altaCuenta(Request $request)
     {
         $id = $request->session()->get('idPersona', null);
         if ($id == null) {
             return redirect('gestion');
         }
 
-        $persona = Personas::with('cuenta')->find($id);
-        if ($persona && $persona->cuenta) {
-            $persona->cuenta->programa = $request->programa_id;
-            $persona->cuenta->extracto = $request->has('extracto') ? 1 : 0;
-            $persona->cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
-            $persona->cuenta->save();
+        $persona = Personas::find($id);
+        if ($persona) {
+            $cuenta = new Cuenta();
+            $cuenta->persona_id = $persona->id;
+            $cuenta->programa_id = $request->programa_id;
+            $cuenta->extracto = $request->has('extracto') ? 1 : 0;
+            $cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
+            $cuenta->save();
+                       
         }
-
-        Session::flash('message', 'Cuenta modificada correctamente.');
-        return Redirect::back();
     }
-
     
 }

@@ -4,14 +4,16 @@
 
 @section('content')
 <section>
-<form id="formulario" method="post" action="{{ route('modificar.cuenta') }}">
+<form id="formulario" method="post" action="{{ route('modificar.cuenta', ['persona' => $persona->id]) }}">
 
-    @csrf
+@csrf
+@method('PUT')
+
    
 
 
 
-        @csrf
+        
         <label>CONTRATO PUNTOS:</label>
         @if ($persona->cuenta)
         <input type="text" id="entidad" disabled value="{{ $persona->cuenta->entidad }}">
@@ -59,6 +61,10 @@
 
 
         <br><br><br>
+        {{-- <input type="button" id="altapuntos" value="Alta" onclick="altaCuenta()">
+
+        <input type="button" id="modifpuntos" value="Modificar" {{ $cuenta ? '' : 'disabled' }}> --}}
+
         <input type="button" id="altapuntos" value='Alta'>
         <input type="submit" id="modifpuntos" value='Modificar'>
 
@@ -70,8 +76,11 @@
 
         <span id='mensajes'></span>
         @if(session('message'))
-        <span id="mensajes">{{ session('message') }}</span>
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
         @endif
+
 
     </form>
 
