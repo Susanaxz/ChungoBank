@@ -41,4 +41,20 @@ class Cuenta extends Model
     {
         return $this->hasOne(Programas::class, 'codigo', 'programa')->first();
     }
+
+    public function alta($datos)
+    {
+        return Cuenta::create([
+            'entidad' => $datos['entidad'],
+            'oficina' => $datos['oficina'],
+            'dc' => $datos['dc'],
+            'cuenta' => $datos['cuenta'],
+            'programa' => $datos['programa'],
+            'extracto' => $datos['extracto'],
+            'renuncia' => $datos['renuncia'],
+            'saldo' => $datos['saldo'],
+            'fechaextracto' => $datos['fechaextracto'],
+            'persona_id' => $datos['persona_id']
+        ]);
+    }
 }
