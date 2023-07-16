@@ -69,57 +69,39 @@ class CuentasController extends Controller
         return response()->json($respuesta);
     }
 
-    public function alta()
-    {
-        $data = request()->all();
-
-        $rules = [
-            'persona_id' => "required|numeric|gt:0|unique:cuentas,persona_id",
-            'programa' => 'required|size:3'
-        ];
-
-        $messages = [
-            'persona_id.required' => 'Se debe seleccionar una persona previamente',
-            'persona_id.numeric' => 'Se debe seleccionar una persona previamente',
-            'persona_id.gt' => 'Se debe seleccionar una persona previamente',
-            'persona_id.unique' => 'Sólo se permite una cuenta puntos por persona',
-            'programa.required' => 'Se debe seleccionar un programa',
-            'programa.size' => 'El programa debe tener 3 caracteres'
-        ];
-
-        $validator = Validator::make($data, $rules, $messages);
-
-        if ($validator->stopOnFirstFailure()->fails()) {
-            $datos['errors'] = $validator->messages()->all();
-            $respuesta = array('codigo' => '10', 'respuesta' => $datos['errors']);
-            return response()->json($respuesta);
-        }
-
-        // Validación adicional para comprobar el programa
-        $programas = Programas::all('codigo')->pluck('codigo')->toArray();
-        if (!in_array($data['programa'], $programas)) {
-            $respuesta = array('codigo' => '20', 'respuesta' => ["Código de programa {$data['programa']} no existe"]);
-            return response()->json($respuesta);
-        }
-
-        // Asignación de número de cuenta aleatorio
-        $data['entidad'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
-        $data['oficina'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
-        $data['dc'] = str_pad(rand(0, 99), 2, '0', STR_PAD_LEFT);
-        $data['cuenta'] = str_pad(rand(0, 9999999999), 10, '0', STR_PAD_LEFT);
-
-        // Manejo de las casillas de verificación de extracto y renuncia de puntos
-        $data['extracto'] = $data['extracto'] ? 1 : 0;
-        $data['renuncia'] = $data['renuncia'] ? 1 : 0;
-
-        // Llama al método de alta definido en el modelo
-        $cuenta = Cuenta::create($data);
-
-        // Confecciona el mensaje de respuesta enviando el número de cuenta asignado por el controlador
-        $respuesta = array('codigo' => '00', 'respuesta' => ['Cuenta creada con éxito: ' . $cuenta->id]);
-
+    public function altaCuenta(Request $request, $persona_id)
+{
+    $persona = Personas::find($persona_id);
+    if (!$persona) {
+        $respuesta = array('codigo' => '10', 'respuesta' => ['No existe la persona']);
         return response()->json($respuesta);
+    } else {
+        $cuenta = Cuenta::where('persona_id', $persona_id)->first();
+        if ($cuenta) {
+            $respuesta = array('codigo' => '10', 'respuesta' => ['Ya existe la cuenta']);
+            return response()->json($respuesta);
+        } else {
+            $cuenta = new Cuenta;
+            $cuenta->persona_id = $persona_id;
+            $cuenta->programa = $request->programa_id;
+            $cuenta->extracto = $request->has('extracto') ? 1 : 0;
+            $cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
+            $cuenta->saldo = 0;
+            $cuenta->fechaextracto = mt_rand() % 2 == 0 ? date('Y-m-d', strtotime('-1 month')) : date('Y-m-d'); // Genera una fecha aleatoria entre el día de hoy y hace un mes
+
+            // Generación de los valores que faltaban
+            $cuenta->entidad = mt_rand(1000,9999); // Genera un número aleatorio de 4 dígitos
+            $cuenta->oficina = mt_rand(1000,9999); // Genera un número aleatorio de 4 dígitos
+            $cuenta->dc = mt_rand(10,99); // Genera un número aleatorio de 2 dígitos
+            $cuenta->cuenta = mt_rand(1,9) . mt_rand(100000000,999999999); // Genera un número aleatorio de 1 dígito seguido de uno de 9 dígitos
+
+            $cuenta->save();
+
+            $respuesta = array('codigo' => '00', 'respuesta' => ['Cuenta creada con éxito']);
+            return redirect()->back()->with('message', 'Cuenta creada con éxito');
+        }
     }
+}
 
     public function modificarCuenta(Request $request, $persona_id)
     {

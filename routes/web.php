@@ -31,6 +31,8 @@ Route::get('/alta-movimientos', function () {
 // Route::match(['get', 'head', 'put', 'post'], '/alta-mto-puntos', 'App\Http\Controllers\CargarVistasController@modificarCuenta')->name('modificar.cuenta');
 Route::put('/modificar/{persona}', 'App\Http\Controllers\CuentasController@modificarCuenta')->name('modificar.cuenta');
 
+Route::post('/alta/{persona_id}', 'App\Http\Controllers\CuentasController@altaCuenta')->name('alta.cuenta');
+
 
 
 Route::get('/alta-mto-puntos', [CargarVistasController::class, 'altaMtoPuntos']);

@@ -4,11 +4,12 @@
 
 @section('content')
 <section>
-<form id="formulario" method="post" action="{{ route('modificar.cuenta', ['persona' => $persona->id]) }}">
+<form id="formulario" method="post" action="{{ $persona->cuenta ? 
+    route('modificar.cuenta', ['persona' => $persona->id]) : 
+    route('alta.cuenta', ['persona_id' => $persona->id]) }}">
 
 @csrf
-@method('PUT')
-
+@method($persona->cuenta ? 'PUT' : 'POST')
    
 
 
@@ -61,11 +62,8 @@
 
 
         <br><br><br>
-        {{-- <input type="button" id="altapuntos" value="Alta" onclick="altaCuenta()">
-
-        <input type="button" id="modifpuntos" value="Modificar" {{ $cuenta ? '' : 'disabled' }}> --}}
-
-        <input type="button" id="altapuntos" value='Alta'>
+        
+        <input type="submit" id="altapuntos" value='Alta'>
         <input type="submit" id="modifpuntos" value='Modificar'>
 
         <input type="button" id="bajapuntos" value='Baja'>
