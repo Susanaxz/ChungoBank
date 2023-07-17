@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Cuentas;
+use App\Models\Cuenta;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Personas;
 
@@ -13,7 +13,7 @@ class CuentasFactory extends Factory
      *
      * @var string
      */
-    protected $model = Cuentas::class;
+    protected $model = Cuenta::class;
 
     /**
      * Define the model's default state.
