@@ -11,11 +11,20 @@
 @section('content')
 		<section>
 			<form id='formulario_mov'>
+
+				@if ($cuenta)
 				<label>CONTRATO PUNTOS:</label>
-				<input type="text" id="entidad" disabled>
-				<input type="text" id="oficina" disabled>
-				<input type="text" id="digito" disabled>
-				<input type="text" id="cuenta" disabled>
+				<input type="text" id="entidad" disabled value="{{ $cuenta->entidad ?? null }}">
+				<input type="text" id="oficina" disabled value="{{ $cuenta->oficina ?? null }}">
+
+				<input type="text" id="digito" disabled value="{{ $cuenta->dc ?? null}}">
+
+				<input type="text" id="cuenta" disabled value="{{ $cuenta->cuenta ?? null}}">
+
+				@endif
+
+
+
 				<input type="hidden" id="nif" value=''>
 				<br><br>
 				<label>FECHA DESDE:</label>

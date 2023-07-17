@@ -54,6 +54,10 @@ Route::get('/consulta-movimientos', function () {
     return view('consulta-movimientos');
 });
 
+Route::get('/consulta-movimientos/{id}', [MovimientosController::class, 'consultaMovimientos'])->name('consulta-movimientos');
+
+
+
 Route::get('/detalle-movimiento', function () {
     return view('detalle-movimiento');
 });

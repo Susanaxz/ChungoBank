@@ -37,9 +37,26 @@ class Movimientos extends Model
         'comentarios',
         'cuenta_id'
     ];
-//  Relación de uno a muchos inversa (muchos a uno) de movimientos a cuentas
+    //  Relación de uno a muchos inversa (muchos a uno) de movimientos a cuentas
     public function cuenta()
-   {
-        return $this->hasOne(Cuentas::class);
-  }
+    {
+        return $this->belongsTo(Cuentas::class);
+    }
+
+    public function consultaMovimientos($datos)
+    {
+        $movimientos = Movimientos::where('cuenta_id', $datos['cuenta_id'])
+        ->when(!empty($datos['fechadesde']) && !empty($datos['fechahasta']), function ($query) use ($datos) {
+            $query->whereBetween('fecha', [$datos['fechadesde'], $datos['fechahasta']]);
+        })
+            ->when(!empty($datos['operacion']), function ($query) use ($datos) {
+                $query->where('operacion', $datos['operacion']);
+            })
+            ->when(!empty($datos['concepto']), function ($query) use ($datos) {
+                $query->where('concepto', 'LIKE', "%{$datos['concepto']}%");
+            })
+            ->get();
+
+        return $movimientos;
+    }
 }

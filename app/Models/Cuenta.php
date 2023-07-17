@@ -59,6 +59,9 @@ class Cuenta extends Model
         ]);
     }
 
-    
+    public function saldoTotal()
+    {
+        return $this->hasMany(Movimientos::class)->sum('puntos');
+    }
 
 }

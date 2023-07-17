@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cuenta;
+use App\Models\Movimientos;
 use Illuminate\Database\Seeder;
 
-class CuentasSeeder extends Seeder
-{
+class MovimientosSeeder extends Seeder{
     /**
      * Run the database seeds.
      *
@@ -15,7 +14,7 @@ class CuentasSeeder extends Seeder
     public function run()
     {
         // Crea 10 personas y sus cuentas
-        Cuenta::factory()
+        Movimientos::factory()
             ->count(10)
             ->create();
     }

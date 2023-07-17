@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Personas;
 use App\Models\Programas;
 use App\Models\Cuenta;
+use App\Models\Movimientos;
 use Exception; // clase para lanzar excepciones y manejar errores
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -49,6 +50,8 @@ class CargarVistasController extends Controller
         return view('consulta-movimientos');
     }
 
+    
+
     public function detalle_movimiento()
     {
         return view('detalle-movimiento');
@@ -83,5 +86,6 @@ class CargarVistasController extends Controller
                        
         }
     }
+
     
 }
