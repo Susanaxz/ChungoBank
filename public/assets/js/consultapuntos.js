@@ -1,5 +1,6 @@
 function consultaPuntos() {
-    var idPersona = document.getElementById('persona_id').value;
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var idPersona = document.getElementById('persona_id').value;
 
 
     fetch('/alta-mto-puntos/consulta-puntos/' + idPersona)
@@ -10,7 +11,7 @@ function consultaPuntos() {
         .then(function(data) {
             if (data.codigo == '00') {
                 // Actualizar la interfaz de usuario con los datos de la cuenta
-                document.getElementById('id').value = data.respuesta.id;
+                document.getElementById('persona_id').value = data.respuesta.id;
                 document.getElementById('descripcion').value = data.respuesta.descripcion;
                 // Habilita los botones
                 document.querySelector('#modifpuntos').removeAttribute('disabled');
@@ -20,7 +21,7 @@ function consultaPuntos() {
                 document.querySelector('#altapuntos').setAttribute('disabled', true);
             } else {
                 // Manejar el error
-                document.getElementById('id').value = '';
+                document.getElementById('persona_id').value = '';
                 document.getElementById('descripcion').value = '';
                 // Deshabilita los botones
                 document.querySelector('#modifpuntos').setAttribute('disabled', true);
@@ -35,4 +36,7 @@ function consultaPuntos() {
             console.error(error);
         }
     );
+    });
 }
+
+    

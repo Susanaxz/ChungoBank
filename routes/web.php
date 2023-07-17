@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CargarVistasController;
 use App\Http\Controllers\PersonasController;
+use App\Http\Controllers\CuentasController;
+use App\Http\Controllers\MovimientosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::post('/alta/{persona_id}', 'App\Http\Controllers\CuentasController@altaCu
 Route::get('/alta-mto-puntos', [CargarVistasController::class, 'altaMtoPuntos']);
 
 Route::get('/cuentas/{persona}', [CuentasController::class, 'consulta'])->name('cuentas.consulta');
+
+Route::delete('/destroy/{cuenta}', [CuentasController::class, 'destroy'])->name('destroy.cuenta');
+
+Route::delete('/personas/{persona_id}', [PersonasController::class, 'destroy']);
+
 
 Route::get('/alta-personas', function () {
     return view('alta-personas');

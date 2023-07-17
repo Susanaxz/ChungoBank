@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tests\Feature\CuentasTest;
 
 class Cuenta extends Model
 {
@@ -57,4 +58,7 @@ class Cuenta extends Model
             'persona_id' => $datos['persona_id']
         ]);
     }
+
+    
+
 }

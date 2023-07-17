@@ -129,6 +129,20 @@ class PersonasController extends Controller
 
         return view('alta-mto-puntos', compact('persona'));
     }
+
+    public function destroy($id)
+    {
+        $persona = Personas::find($id);
+
+        if (!$persona) {
+            // No se encontró la persona
+            return response()->json(['message' => 'No se encontró la persona.'], 404);
+        }
+
+        $persona->eliminarConCuenta();
+
+        return response()->json(['message' => 'Persona y su cuenta eliminadas con éxito.']);
+    }
     
 }
 

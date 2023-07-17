@@ -39,6 +39,16 @@ class Personas extends Model
     {
         return $this->hasOne(Cuenta::class, 'persona_id')->first();
     }
+    public function eliminarConCuenta()
+    {
+        if ($this->cuenta) {
+            return $this->delete();
+        } else {
+            $this->delete();
+            return response()->json(['codigo' => '00', 'respuesta' => ['La persona ha sido eliminada con éxito']]);
+        }
+    }
+
 }
 
 

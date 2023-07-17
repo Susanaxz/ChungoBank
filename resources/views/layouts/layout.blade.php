@@ -5,12 +5,23 @@
     <title>Chungo Bank</title>
     <meta charset="utf-8">
     {{-- <link rel="stylesheet" type="text/css" href="assets/css/cb.css"> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/cb.css') }}">
-    <script type="text/javascript" src="{{ asset('assets/js/iniciopuntos.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/altapuntos.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ asset('assets/js/iniciopuntos.js') }}"></script>
+
     {{-- <script type="text/javascript" src="{{ asset('assets/js/modificacionpuntos.js') }}"></script> --}}
     <script type="text/javascript" src="{{ asset('assets/js/consultapuntos.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bajapuntos.js') }}"></script>
+
+
+
+
+
 
 
     @yield('styles')

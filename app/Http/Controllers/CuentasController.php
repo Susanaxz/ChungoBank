@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Cuenta;
 use App\Models\Personas;
@@ -70,38 +71,38 @@ class CuentasController extends Controller
     }
 
     public function altaCuenta(Request $request, $persona_id)
-{
-    $persona = Personas::find($persona_id);
-    if (!$persona) {
-        $respuesta = array('codigo' => '10', 'respuesta' => ['No existe la persona']);
-        return response()->json($respuesta);
-    } else {
-        $cuenta = Cuenta::where('persona_id', $persona_id)->first();
-        if ($cuenta) {
-            $respuesta = array('codigo' => '10', 'respuesta' => ['Ya existe la cuenta']);
+    {
+        $persona = Personas::find($persona_id);
+        if (!$persona) {
+            $respuesta = array('codigo' => '10', 'respuesta' => ['No existe la persona']);
             return response()->json($respuesta);
         } else {
-            $cuenta = new Cuenta;
-            $cuenta->persona_id = $persona_id;
-            $cuenta->programa = $request->programa_id;
-            $cuenta->extracto = $request->has('extracto') ? 1 : 0;
-            $cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
-            $cuenta->saldo = 0;
-            $cuenta->fechaextracto = mt_rand() % 2 == 0 ? date('Y-m-d', strtotime('-1 month')) : date('Y-m-d'); // Genera una fecha aleatoria entre el día de hoy y hace un mes
+            $cuenta = Cuenta::where('persona_id', $persona_id)->first();
+            if ($cuenta) {
+                $respuesta = array('codigo' => '10', 'respuesta' => ['Ya existe la cuenta']);
+                return response()->json($respuesta);
+            } else {
+                $cuenta = new Cuenta;
+                $cuenta->persona_id = $persona_id;
+                $cuenta->programa = $request->programa_id;
+                $cuenta->extracto = $request->has('extracto') ? 1 : 0;
+                $cuenta->renuncia = $request->has('renuncia') ? 1 : 0;
+                $cuenta->saldo = 0;
+                $cuenta->fechaextracto = mt_rand() % 2 == 0 ? date('Y-m-d', strtotime('-1 month')) : date('Y-m-d'); // Genera una fecha aleatoria entre el día de hoy y hace un mes
 
-            // Generación de los valores que faltaban
-            $cuenta->entidad = mt_rand(1000,9999); // Genera un número aleatorio de 4 dígitos
-            $cuenta->oficina = mt_rand(1000,9999); // Genera un número aleatorio de 4 dígitos
-            $cuenta->dc = mt_rand(10,99); // Genera un número aleatorio de 2 dígitos
-            $cuenta->cuenta = mt_rand(1,9) . mt_rand(100000000,999999999); // Genera un número aleatorio de 1 dígito seguido de uno de 9 dígitos
+                // Generación de los valores que faltaban
+                $cuenta->entidad = mt_rand(1000, 9999); // Genera un número aleatorio de 4 dígitos
+                $cuenta->oficina = mt_rand(1000, 9999); // Genera un número aleatorio de 4 dígitos
+                $cuenta->dc = mt_rand(10, 99); // Genera un número aleatorio de 2 dígitos
+                $cuenta->cuenta = mt_rand(1, 9) . mt_rand(100000000, 999999999); // Genera un número aleatorio de 1 dígito seguido de uno de 9 dígitos
 
-            $cuenta->save();
+                $cuenta->save();
 
-            $respuesta = array('codigo' => '00', 'respuesta' => ['Cuenta creada con éxito']);
-            return redirect()->back()->with('message', 'Cuenta creada con éxito');
+                $respuesta = array('codigo' => '00', 'respuesta' => ['Cuenta creada con éxito']);
+                return redirect()->back()->with('message', 'Cuenta creada con éxito');
+            }
         }
     }
-}
 
     public function modificarCuenta(Request $request, $persona_id)
     {
@@ -120,4 +121,37 @@ class CuentasController extends Controller
             return redirect()->back()->with('message', 'Cuenta modificada con éxito');
         }
     }
+
+    public function destroy(Cuenta $cuenta)
+    {
+        try {
+            // Inicia una transacción de la base de datos
+            DB::beginTransaction();
+
+            // Encuentra la persona asociada a la cuenta
+            $persona = $cuenta->persona;
+
+            // Primero, intenta eliminar la cuenta
+            $cuenta->delete();
+
+            // Luego, si existe, elimina la persona
+            if ($persona) {
+                $persona->delete();
+            }
+
+            // Si todo salió bien, confirma los cambios
+            DB::commit();
+
+            // Devuelve un JSON en lugar de una redirección
+            return response()->json(['codigo' => '00', 'respuesta' => ['Persona y cuenta eliminadas con éxito']]);
+        } catch (\Exception $e) {
+            // Si algo salió mal, revierte los cambios
+            DB::rollback();
+
+            // Devuelve un JSON con el mensaje de error
+            return response()->json(['codigo' => '10', 'respuesta' => ['Error al eliminar persona y cuentaTUTUTU: ' . $e->getMessage()]]);
+        }
+    }
+
+
 }
