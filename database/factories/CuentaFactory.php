@@ -4,26 +4,13 @@ namespace Database\Factories;
 
 use App\Models\Cuenta;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Personas;
 
-class CuentasFactory extends Factory
+class CuentaFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Cuenta::class;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
 
     public function definition()
     {
-        $persona = Personas::factory()->create(); // Creamos una persona para asociarla a la cuenta
         $programas = [
             ['codigo' => 'PBS', 'descripcion' => 'Programa Puntos Básico'],
             ['codigo' => 'PAV', 'descripcion' => 'Programa Puntos Avanzado'],
@@ -31,7 +18,7 @@ class CuentasFactory extends Factory
         ];
 
         $programa = $programas[array_rand($programas)];
-        
+
         return [
             'entidad' => $this->faker->randomNumber(4, true),
             'oficina' => $this->faker->randomNumber(4, true),
@@ -42,7 +29,7 @@ class CuentasFactory extends Factory
             'renuncia' => $this->faker->randomElement([0, 1]),
             'saldo' => $this->faker->randomFloat(2, 0, 99999),
             'fechaextracto' => $this->faker->date(),
-            'persona_id' => $persona->id,
+            // 'persona_id' => null, ya no necesitamos esto aquí.
         ];
     }
 }
