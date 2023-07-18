@@ -69,7 +69,8 @@
         <input type="button" id="bajapuntos" data-id="{{ $persona->cuenta->id ?? '' }}" value='Baja'>
 
 
-        <input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = '{{ route('consulta-movimientos', ['id' => $persona->id]) }}'">
+        <input type="button" id="movimientos" value='Consulta mvtos' onclick="window.location.href = '{{ route('consulta.movimientos', ['id' => $persona->id]) }}'">
+
 
 
         <input type="button" id="salir" value='Abandonar' onclick="window.location.href = '{{ url('gestion') }}'">

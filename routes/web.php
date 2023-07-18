@@ -56,6 +56,7 @@ Route::get('/consulta-movimientos', function () {
 
 Route::get('/consulta-movimientos/{id}', [MovimientosController::class, 'consultaMovimientos'])->name('consulta-movimientos');
 
+Route::match(['get', 'post'], '/consulta-movimientos/{id}', [MovimientosController::class, 'consultaMovimientos'])->name('consulta.movimientos');
 
 
 Route::get('/detalle-movimiento', function () {
